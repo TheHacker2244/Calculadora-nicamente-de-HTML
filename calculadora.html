@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Web</title>
+    <style>
+        .P {
+            font-size: 2em;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            color: #00aba0;
+        }
+
+        .fieldset {
+            width: 250px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 3px solid #4CAF50;
+            border-radius: 8px;
+            background-color: #f5f5f5;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+            text-align: right;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+
+        input[type="button"], input[type="submit"] {
+            width: 23%;
+            padding: 10px;
+            margin: 2px;
+            font-size: 1.2em;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #e0e0e0;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="button"]:hover, input[type="submit"]:hover {
+            background-color: #066f8d;
+            color: rgb(0, 255, 204);
+        }
+
+        input[name="igual"] {
+            width: 48%;
+        }
+
+        input[name="delete"], input[name="borrar"] {
+            background-color: #f44336;
+            color: white;
+        }
+
+        input[name="delete"]:hover, input[name="borrar"]:hover {
+            background-color: #d32f2f;
+        }
+    </style>
+</head>
+<body>
+    <p class="P">Calculadora</p><br>
+    <fieldset class="fieldset">
+        <form>
+            <input type="text" name="pantalla" readonly><br>
+            <input type="button" name="num1" value="1" onclick="agregar('1')">
+            <input type="button" name="num2" value="2" onclick="agregar('2')">
+            <input type="button" name="num3" value="3" onclick="agregar('3')"><br>
+            <input type="button" name="num4" value="4" onclick="agregar('4')">
+            <input type="button" name="num5" value="5" onclick="agregar('5')">
+            <input type="button" name="num6" value="6" onclick="agregar('6')"><br>
+            <input type="button" name="num7" value="7" onclick="agregar('7')">
+            <input type="button" name="num8" value="8" onclick="agregar('8')">
+            <input type="button" name="num9" value="9" onclick="agregar('9')"><br>
+            <input type="button" name="num0" value="0" onclick="agregar('0')">
+            <input type="button" name="suma" value="+" onclick="agregar('+')">
+            <input type="button" name="resta" value="-" onclick="agregar('-')"><br>
+            <input type="button" name="multiplicacion" value="*" onclick="agregar('*')">
+            <input type="button" name="division" value="/" onclick="agregar('/')">
+            <input type="button" name="punto" value="." onclick="agregar('.')"><br>
+            <input type="button" name="igual" value="=" onclick="calcular()">
+            <input type="button" name="delete" value="D" onclick="retroceder()">
+            <input type="button" name="borrar" value="C" onclick="limpiar()"><br>
+        </form>
+    </fieldset>
+    <script>
+        let pantalla = document.querySelector('input[name="pantalla"]');
+        let operacion = "";
+
+        function agregar(valor) {
+            operacion += valor;
+            pantalla.value = operacion;
+        }
+
+        function limpiar() {
+            operacion = "";
+            pantalla.value = operacion;
+        }
+
+        function retroceder() {
+            operacion = operacion.slice(0, -1);
+            pantalla.value = operacion;
+        }
+
+        function calcular() {
+            try {
+                const resultado = new Function('return ' + operacion.replace(/÷/g, '/').replace(/×/g, '*'))();
+                pantalla.value = resultado;
+                operacion = resultado.toString();
+            } catch (error) {
+                pantalla.value = "Error";
+                operacion = "";
+            }
+        }
+    </script>
+</body>
+</html>
